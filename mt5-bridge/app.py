@@ -1,246 +1,172 @@
 from datetime import datetime, timezone
 from typing import Optional
-
 import MetaTrader5 as mt5
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-app = FastAPI(title="Global AI Trading Center MT5 Bridge", version="0.2.0")
+app = FastAPI(title="Global AI Trading Center MT5 Bridge", version="0.4.1")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
+MAGIC=560056
+_connected_server: Optional[str]=None
+_day_key: Optional[str]=None
+_day_start_equity: Optional[float]=None
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://trade-web.hastenload.com"],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+class ConnectReq(BaseModel): server:str; login:str; password:str; access_mode:str="demo_trade"
+class OrderReq(BaseModel): symbol:str; side:str; volume:Optional[float]=None; risk_percent:Optional[float]=None; stop_loss:Optional[float]=None; take_profit:Optional[float]=None; deviation:int=20; comment:str="GlobalAITradingCenter"
+class ModifyReq(BaseModel): stop_loss:Optional[float]=None; take_profit:Optional[float]=None
+class ManageReq(BaseModel): trailing_enabled:bool=False; trailing_distance_points:float=150; profit_target_usd:Optional[float]=None; max_drawdown_percent:Optional[float]=None; close_all_on_profit_target:bool=True
 
+def account_info():
+    x=mt5.account_info()
+    if x is None: raise HTTPException(503,f"MT5 account unavailable: {mt5.last_error()}")
+    return x
 
-class MT5ConnectRequest(BaseModel):
-    server: str
-    login: str
-    password: str
-    access_mode: str = "read_only"
+def demo_account():
+    x=account_info()
+    if getattr(x,"trade_mode",None)!=0: raise HTTPException(403,"Execution is enabled for DEMO accounts only.")
+    return x
 
+def symbol_info(symbol):
+    x=mt5.symbol_info(symbol)
+    if x is None: raise HTTPException(404,f"Symbol {symbol} not found")
+    if not x.visible and not mt5.symbol_select(symbol,True): raise HTTPException(400,f"Unable to enable {symbol}")
+    return x
 
-class MT5OrderRequest(BaseModel):
-    symbol: str
-    side: str
-    volume: float
-    stop_loss: Optional[float] = None
-    take_profit: Optional[float] = None
-    deviation: int = 20
-    comment: str = "GlobalAITradingCenter"
+def norm_volume(i,v):
+    v=max(i.volume_min,min(float(v),i.volume_max))
+    if i.volume_step: v=round(v/i.volume_step)*i.volume_step
+    return round(v,8)
 
+def account_payload(x):
+    rows=mt5.positions_get() or []
+    return {"status":"connected","environment":"demo" if getattr(x,"trade_mode",0)==0 else "live","account_masked":("•"*max(0,len(str(x.login))-4))+str(x.login)[-4:],"currency":x.currency,"balance":x.balance,"equity":x.equity,"margin":x.margin,"free_margin":x.margin_free,"margin_level":getattr(x,"margin_level",0),"profit":x.profit,"open_positions":len(rows),"leverage":getattr(x,"leverage",None),"last_sync":datetime.now(timezone.utc).isoformat(),"server":_connected_server}
 
-_connected_login: Optional[int] = None
-_connected_server: Optional[str] = None
+def position_payload(p):
+    return {"ticket":p.ticket,"symbol":p.symbol,"type":"buy" if p.type==mt5.POSITION_TYPE_BUY else "sell","volume":p.volume,"price_open":p.price_open,"price_current":p.price_current,"sl":p.sl,"tp":p.tp,"profit":p.profit,"swap":p.swap,"magic":p.magic,"time":datetime.fromtimestamp(p.time,tz=timezone.utc).isoformat()}
 
+def daily_stats():
+    now=datetime.now(timezone.utc); start=datetime(now.year,now.month,now.day,tzinfo=timezone.utc); deals=mt5.history_deals_get(start,now) or []; profit=0.; trades=0
+    for d in deals:
+        if getattr(d,"magic",0)!=MAGIC: continue
+        profit+=float(getattr(d,"profit",0) or 0)+float(getattr(d,"commission",0) or 0)+float(getattr(d,"swap",0) or 0)
+        if getattr(d,"entry",None) in {mt5.DEAL_ENTRY_IN,getattr(mt5,"DEAL_ENTRY_INOUT",-1)}: trades+=1
+    return {"date":start.date().isoformat(),"realized_profit":profit,"trades":trades}
 
-def _require_account_info():
-    info = mt5.account_info()
-    if info is None:
-        raise HTTPException(status_code=503, detail=f"MT5 account unavailable: {mt5.last_error()}")
-    return info
+def drawdown_state(info):
+    global _day_key,_day_start_equity
+    today=datetime.now(timezone.utc).date().isoformat()
+    if _day_key!=today or _day_start_equity is None:
+        st=daily_stats(); _day_key=today; _day_start_equity=max(.01,float(info.equity)-float(info.profit)-float(st["realized_profit"]))
+    return {"day_start_equity":_day_start_equity,"drawdown_percent":max(0.,(_day_start_equity-float(info.equity))/_day_start_equity*100.)}
 
+def risk_volume(symbol,side,stop,risk):
+    a=account_info(); i=symbol_info(symbol); tick=mt5.symbol_info_tick(symbol)
+    if tick is None: raise HTTPException(503,f"No live tick for {symbol}")
+    if risk<=0 or risk>10: raise HTTPException(400,"risk_percent must be >0 and <=10")
+    typ=mt5.ORDER_TYPE_BUY if side=="buy" else mt5.ORDER_TYPE_SELL; entry=tick.ask if side=="buy" else tick.bid; loss=mt5.order_calc_profit(typ,symbol,1.,entry,float(stop))
+    if loss is None or abs(loss)<.01: raise HTTPException(400,"Unable to calculate risk volume")
+    amount=float(a.equity)*risk/100.; return norm_volume(i,amount/abs(loss))
 
-def _require_demo_account():
-    info = _require_account_info()
-    # MetaTrader5 ACCOUNT_TRADE_MODE_DEMO is 0.
-    if getattr(info, "trade_mode", None) != 0:
-        raise HTTPException(status_code=403, detail="Execution is enabled for DEMO accounts only.")
-    return info
-
-
-def _account_payload(info):
-    positions = mt5.positions_get()
-    position_count = 0 if positions is None else len(positions)
-    login_text = str(info.login)
-    masked = ("•" * max(0, len(login_text) - 4)) + login_text[-4:]
-    return {
-        "status": "connected",
-        "environment": "demo" if getattr(info, "trade_mode", 0) == 0 else "live",
-        "account_masked": masked,
-        "currency": info.currency,
-        "balance": info.balance,
-        "equity": info.equity,
-        "margin": info.margin,
-        "free_margin": info.margin_free,
-        "profit": info.profit,
-        "open_positions": position_count,
-        "last_sync": datetime.now(timezone.utc).isoformat(),
-        "server": _connected_server,
-    }
-
-
-def _position_payload(p):
-    return {
-        "ticket": p.ticket,
-        "symbol": p.symbol,
-        "type": "buy" if p.type == mt5.POSITION_TYPE_BUY else "sell",
-        "volume": p.volume,
-        "price_open": p.price_open,
-        "price_current": p.price_current,
-        "sl": p.sl,
-        "tp": p.tp,
-        "profit": p.profit,
-        "swap": p.swap,
-        "time": datetime.fromtimestamp(p.time, tz=timezone.utc).isoformat(),
-    }
-
-
-def _ensure_symbol(symbol: str):
-    info = mt5.symbol_info(symbol)
-    if info is None:
-        raise HTTPException(status_code=404, detail=f"Symbol {symbol} not found in MT5.")
-    if not info.visible and not mt5.symbol_select(symbol, True):
-        raise HTTPException(status_code=400, detail=f"Unable to enable symbol {symbol}.")
-    return info
-
+def close_one(p,deviation=20):
+    i=symbol_info(p.symbol); tick=mt5.symbol_info_tick(p.symbol)
+    if tick is None: raise HTTPException(503,f"No live tick for {p.symbol}")
+    typ=mt5.ORDER_TYPE_SELL if p.type==mt5.POSITION_TYPE_BUY else mt5.ORDER_TYPE_BUY; price=tick.bid if typ==mt5.ORDER_TYPE_SELL else tick.ask
+    r=mt5.order_send({"action":mt5.TRADE_ACTION_DEAL,"position":p.ticket,"symbol":p.symbol,"volume":p.volume,"type":typ,"price":price,"deviation":deviation,"magic":MAGIC,"comment":"GlobalAI close","type_time":mt5.ORDER_TIME_GTC,"type_filling":i.filling_mode})
+    if r is None or r.retcode not in {mt5.TRADE_RETCODE_DONE,mt5.TRADE_RETCODE_PLACED,mt5.TRADE_RETCODE_DONE_PARTIAL}: raise HTTPException(400,f"Close rejected: {mt5.last_error() if r is None else r.comment}")
+    return r
 
 @app.get("/api/v1/health")
-def health():
-    return {"status": "ok", "service": "mt5-bridge", "version": "0.2.0"}
-
+def health(): return {"status":"ok","service":"mt5-bridge","version":"0.4.1","mt5_initialized":mt5.terminal_info() is not None}
 
 @app.post("/api/v1/mt5/connect")
-def connect_mt5(req: MT5ConnectRequest):
-    global _connected_login, _connected_server
-    try:
-        login = int(req.login)
-    except ValueError as exc:
-        raise HTTPException(status_code=400, detail="MT5 login must be numeric.") from exc
-
-    if not mt5.initialize(login=login, server=req.server, password=req.password):
-        code, message = mt5.last_error()
-        mt5.shutdown()
-        raise HTTPException(status_code=401, detail=f"MT5 connection failed: {code} {message}")
-
-    _connected_login = login
-    _connected_server = req.server
-    payload = _account_payload(_require_account_info())
-    payload["message"] = "MetaTrader 5 connected successfully."
-    return payload
-
+def connect(req:ConnectReq):
+    global _connected_server,_day_key,_day_start_equity
+    try: login=int(req.login)
+    except ValueError: raise HTTPException(400,"MT5 login must be numeric")
+    if not mt5.initialize(login=login,server=req.server,password=req.password):
+        code,msg=mt5.last_error(); mt5.shutdown(); raise HTTPException(401,f"MT5 connection failed: {code} {msg}")
+    _connected_server=req.server; _day_key=None; _day_start_equity=None; p=account_payload(account_info()); p["message"]="MetaTrader 5 connected successfully."; return p
 
 @app.post("/api/v1/mt5/disconnect")
-def disconnect_mt5():
-    global _connected_login, _connected_server
-    mt5.shutdown()
-    _connected_login = None
-    _connected_server = None
-    return {"status": "disconnected"}
-
+def disconnect(): mt5.shutdown(); return {"status":"disconnected"}
 
 @app.get("/api/v1/mt5/account")
 def account():
-    return _account_payload(_require_account_info())
-
+    x=account_info(); p=account_payload(x); p.update(drawdown_state(x)); p.update(daily_stats()); return p
 
 @app.get("/api/v1/mt5/positions")
-def positions():
-    _require_account_info()
-    rows = mt5.positions_get()
-    if rows is None:
-        code, message = mt5.last_error()
-        raise HTTPException(status_code=503, detail=f"Unable to read MT5 positions: {code} {message}")
-    return {"positions": [_position_payload(p) for p in rows], "count": len(rows)}
+def positions(): return {"positions":[position_payload(p) for p in (mt5.positions_get() or [])],"count":len(mt5.positions_get() or [])}
 
+@app.get("/api/v1/mt5/symbol/{symbol}")
+def snapshot(symbol:str):
+    i=symbol_info(symbol); t=mt5.symbol_info_tick(symbol)
+    if t is None: raise HTTPException(503,f"No live tick for {symbol}")
+    point=i.point or .00001
+    return {"symbol":symbol,"bid":t.bid,"ask":t.ask,"last":t.last,"spread_points":(t.ask-t.bid)/point,"point":point,"digits":i.digits,"volume_min":i.volume_min,"volume_max":i.volume_max,"volume_step":i.volume_step,"tick_time":datetime.fromtimestamp(t.time,tz=timezone.utc).isoformat()}
+
+@app.get("/api/v1/mt5/candles/{symbol}")
+def candles(symbol:str,timeframe:str="M1",count:int=240):
+    symbol_info(symbol); m={"M1":mt5.TIMEFRAME_M1,"M5":mt5.TIMEFRAME_M5,"M15":mt5.TIMEFRAME_M15,"M30":mt5.TIMEFRAME_M30,"H1":mt5.TIMEFRAME_H1,"H4":mt5.TIMEFRAME_H4,"D1":mt5.TIMEFRAME_D1}; tf=m.get(timeframe.upper())
+    if tf is None: raise HTTPException(400,"Unsupported timeframe")
+    rates=mt5.copy_rates_from_pos(symbol,tf,0,max(20,min(count,2000)))
+    if rates is None or len(rates)==0: raise HTTPException(503,"No candle data")
+    rows=[{"time":int(r["time"])*1000,"open":float(r["open"]),"high":float(r["high"]),"low":float(r["low"]),"close":float(r["close"]),"volume":int(r["tick_volume"]),"spread":int(r["spread"])} for r in rates]; trs=[]
+    for n,r in enumerate(rows):
+        prev=rows[n-1]["close"] if n else r["open"]; trs.append(max(r["high"]-r["low"],abs(r["high"]-prev),abs(r["low"]-prev)))
+    atr=sum(trs[-14:])/min(14,len(trs)); current=rows[-1]["high"]-rows[-1]["low"]; vols=[r["volume"] for r in rows[-20:]]; base=sum(vols[:-1])/max(1,len(vols)-1)
+    return {"symbol":symbol,"timeframe":timeframe.upper(),"candles":rows,"atr14":atr,"candle_atr_multiple":current/atr if atr else 0,"tick_activity_ratio":rows[-1]["volume"]/base if base else 1}
 
 @app.post("/api/v1/mt5/order")
-def place_order(req: MT5OrderRequest):
-    _require_demo_account()
-    side = req.side.lower().strip()
-    if side not in {"buy", "sell"}:
-        raise HTTPException(status_code=400, detail="side must be buy or sell")
-    if req.volume <= 0:
-        raise HTTPException(status_code=400, detail="volume must be greater than 0")
+def order(req:OrderReq):
+    demo_account(); side=req.side.lower().strip()
+    if side not in {"buy","sell"}: raise HTTPException(400,"side must be buy or sell")
+    i=symbol_info(req.symbol); t=mt5.symbol_info_tick(req.symbol)
+    if t is None: raise HTTPException(503,"No live tick")
+    typ=mt5.ORDER_TYPE_BUY if side=="buy" else mt5.ORDER_TYPE_SELL; price=t.ask if side=="buy" else t.bid; volume=req.volume
+    if req.risk_percent is not None and req.stop_loss: volume=risk_volume(req.symbol,side,req.stop_loss,req.risk_percent)
+    if not volume or volume<=0: raise HTTPException(400,"Provide volume or risk_percent with stop_loss")
+    q={"action":mt5.TRADE_ACTION_DEAL,"symbol":req.symbol,"volume":norm_volume(i,volume),"type":typ,"price":price,"deviation":req.deviation,"magic":MAGIC,"comment":req.comment,"type_time":mt5.ORDER_TIME_GTC,"type_filling":i.filling_mode}
+    if req.stop_loss: q["sl"]=float(req.stop_loss)
+    if req.take_profit: q["tp"]=float(req.take_profit)
+    if mt5.order_check(q) is None: raise HTTPException(400,f"order_check failed: {mt5.last_error()}")
+    r=mt5.order_send(q)
+    if r is None or r.retcode not in {mt5.TRADE_RETCODE_DONE,mt5.TRADE_RETCODE_PLACED,mt5.TRADE_RETCODE_DONE_PARTIAL}: raise HTTPException(400,f"MT5 rejected order: {mt5.last_error() if r is None else r.comment}")
+    return {"status":"accepted","order":r.order,"deal":r.deal,"symbol":req.symbol,"side":side,"volume":q["volume"],"price":r.price or price}
 
-    info = _ensure_symbol(req.symbol)
-    tick = mt5.symbol_info_tick(req.symbol)
-    if tick is None:
-        raise HTTPException(status_code=503, detail=f"No live tick for {req.symbol}.")
-
-    order_type = mt5.ORDER_TYPE_BUY if side == "buy" else mt5.ORDER_TYPE_SELL
-    price = tick.ask if side == "buy" else tick.bid
-
-    # Normalize volume to the broker's allowed range/step.
-    volume = max(info.volume_min, min(req.volume, info.volume_max))
-    if info.volume_step:
-        steps = round(volume / info.volume_step)
-        volume = steps * info.volume_step
-
-    request = {
-        "action": mt5.TRADE_ACTION_DEAL,
-        "symbol": req.symbol,
-        "volume": float(volume),
-        "type": order_type,
-        "price": price,
-        "deviation": req.deviation,
-        "magic": 560056,
-        "comment": req.comment,
-        "type_time": mt5.ORDER_TIME_GTC,
-        "type_filling": info.filling_mode,
-    }
-    if req.stop_loss and req.stop_loss > 0:
-        request["sl"] = float(req.stop_loss)
-    if req.take_profit and req.take_profit > 0:
-        request["tp"] = float(req.take_profit)
-
-    result = mt5.order_send(request)
-    if result is None:
-        code, message = mt5.last_error()
-        raise HTTPException(status_code=500, detail=f"order_send failed: {code} {message}")
-
-    if result.retcode not in {mt5.TRADE_RETCODE_DONE, mt5.TRADE_RETCODE_PLACED, mt5.TRADE_RETCODE_DONE_PARTIAL}:
-        raise HTTPException(status_code=400, detail=f"MT5 rejected order: {result.retcode} {result.comment}")
-
-    return {
-        "status": "filled" if result.retcode == mt5.TRADE_RETCODE_DONE else "accepted",
-        "order": result.order,
-        "deal": result.deal,
-        "symbol": req.symbol,
-        "side": side,
-        "volume": volume,
-        "price": result.price or price,
-        "retcode": result.retcode,
-        "comment": result.comment,
-        "account": _account_payload(_require_account_info()),
-    }
-
+@app.post("/api/v1/mt5/positions/{ticket}/modify")
+def modify(ticket:int,req:ModifyReq):
+    demo_account(); rows=mt5.positions_get(ticket=ticket)
+    if not rows: raise HTTPException(404,"Position not found")
+    p=rows[0]; q={"action":mt5.TRADE_ACTION_SLTP,"position":p.ticket,"symbol":p.symbol,"sl":float(req.stop_loss or p.sl or 0),"tp":float(req.take_profit or p.tp or 0),"magic":MAGIC}; r=mt5.order_send(q)
+    if r is None or r.retcode!=mt5.TRADE_RETCODE_DONE: raise HTTPException(400,"Modify failed")
+    return {"status":"modified","ticket":ticket,"sl":q["sl"],"tp":q["tp"]}
 
 @app.post("/api/v1/mt5/positions/{ticket}/close")
-def close_position(ticket: int):
-    _require_demo_account()
-    rows = mt5.positions_get(ticket=ticket)
-    if not rows:
-        raise HTTPException(status_code=404, detail=f"Position {ticket} not found.")
-    p = rows[0]
-    info = _ensure_symbol(p.symbol)
-    tick = mt5.symbol_info_tick(p.symbol)
-    if tick is None:
-        raise HTTPException(status_code=503, detail=f"No live tick for {p.symbol}.")
+def close(ticket:int):
+    demo_account(); rows=mt5.positions_get(ticket=ticket)
+    if not rows: raise HTTPException(404,"Position not found")
+    r=close_one(rows[0]); return {"status":"closed","ticket":ticket,"retcode":r.retcode}
 
-    closing_type = mt5.ORDER_TYPE_SELL if p.type == mt5.POSITION_TYPE_BUY else mt5.ORDER_TYPE_BUY
-    price = tick.bid if closing_type == mt5.ORDER_TYPE_SELL else tick.ask
-    request = {
-        "action": mt5.TRADE_ACTION_DEAL,
-        "position": p.ticket,
-        "symbol": p.symbol,
-        "volume": p.volume,
-        "type": closing_type,
-        "price": price,
-        "deviation": 20,
-        "magic": 560056,
-        "comment": "GlobalAITradingCenter close",
-        "type_time": mt5.ORDER_TIME_GTC,
-        "type_filling": info.filling_mode,
-    }
-    result = mt5.order_send(request)
-    if result is None:
-        code, message = mt5.last_error()
-        raise HTTPException(status_code=500, detail=f"close failed: {code} {message}")
-    if result.retcode not in {mt5.TRADE_RETCODE_DONE, mt5.TRADE_RETCODE_PLACED, mt5.TRADE_RETCODE_DONE_PARTIAL}:
-        raise HTTPException(status_code=400, detail=f"MT5 rejected close: {result.retcode} {result.comment}")
-    return {"status": "closed", "ticket": ticket, "retcode": result.retcode, "comment": result.comment}
+@app.post("/api/v1/mt5/positions/close-all")
+def close_all():
+    demo_account(); rows=list(mt5.positions_get() or []); out=[]
+    for p in rows:
+        try: r=close_one(p); out.append({"ticket":p.ticket,"status":"closed","retcode":r.retcode})
+        except HTTPException as e: out.append({"ticket":p.ticket,"status":"failed","detail":e.detail})
+    return {"requested":len(rows),"closed":sum(x["status"]=="closed" for x in out),"results":out}
+
+@app.post("/api/v1/mt5/manage")
+def manage(req:ManageReq):
+    info=demo_account(); rows=list(mt5.positions_get() or []); dd=drawdown_state(info)["drawdown_percent"]; profit=sum(float(p.profit) for p in rows); reached=req.profit_target_usd is not None and profit>=req.profit_target_usd; dd_reached=req.max_drawdown_percent is not None and dd>=req.max_drawdown_percent; actions=[]
+    if reached and req.close_all_on_profit_target:
+        for p in rows:
+            try: close_one(p); actions.append({"ticket":p.ticket,"action":"close_profit_target"})
+            except HTTPException as e: actions.append({"ticket":p.ticket,"action":"close_failed","detail":e.detail})
+    elif req.trailing_enabled:
+        for p in rows:
+            i=symbol_info(p.symbol); dist=max(1,req.trailing_distance_points)*(i.point or .00001); candidate=p.price_current-dist if p.type==mt5.POSITION_TYPE_BUY else p.price_current+dist; improves=(p.type==mt5.POSITION_TYPE_BUY and candidate>(p.sl or 0) and candidate>p.price_open) or (p.type!=mt5.POSITION_TYPE_BUY and (p.sl==0 or candidate<p.sl) and candidate<p.price_open)
+            if improves:
+                r=mt5.order_send({"action":mt5.TRADE_ACTION_SLTP,"position":p.ticket,"symbol":p.symbol,"sl":float(candidate),"tp":float(p.tp or 0),"magic":MAGIC})
+                if r is not None and r.retcode==mt5.TRADE_RETCODE_DONE: actions.append({"ticket":p.ticket,"action":"trail_stop","sl":candidate})
+    return {"open_profit":profit,"profit_target_reached":reached,"drawdown_percent":dd,"drawdown_limit_reached":dd_reached,"entries_blocked":reached or dd_reached,"actions":actions,"positions":[position_payload(p) for p in (mt5.positions_get() or [])],"daily":daily_stats(),"account":account_payload(account_info())}
