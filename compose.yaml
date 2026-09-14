@@ -9,6 +9,9 @@ services:
 
     restart: unless-stopped
 
+    environment:
+      MARKET_PROVIDER: mock
+
     ports:
       - "8100:8000"
 
