@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "preset_name": {
+      "type": "string"
+    },
+    "symbol_valid": {
+      "type": "boolean"
+    },
+    "timeframe_valid": {
+      "type": "boolean"
+    },
+    "spread_valid": {
+      "type": "boolean"
+    },
+    "account_valid": {
+      "type": "boolean"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "validated_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingPresetValidation"
+}

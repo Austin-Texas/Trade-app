@@ -1,0 +1,86 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "risk_per_trade_pct": {
+      "type": "number"
+    },
+    "max_daily_loss_pct": {
+      "type": "number"
+    },
+    "max_drawdown_pct": {
+      "type": "number"
+    },
+    "max_open_positions": {
+      "type": "integer"
+    },
+    "max_daily_trades": {
+      "type": "integer"
+    },
+    "max_position_notional": {
+      "type": "number"
+    },
+    "news_protection": {
+      "type": "boolean"
+    },
+    "spread_protection": {
+      "type": "boolean"
+    },
+    "slippage_protection": {
+      "type": "boolean"
+    },
+    "emergency_kill_switch": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "name",
+    "risk_per_trade_pct",
+    "max_daily_loss_pct",
+    "max_drawdown_pct"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "name": "RiskProfile"
+}

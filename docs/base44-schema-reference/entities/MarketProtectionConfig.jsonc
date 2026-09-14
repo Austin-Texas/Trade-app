@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "spread_enabled": {
+      "type": "boolean"
+    },
+    "candle_enabled": {
+      "type": "boolean"
+    },
+    "tick_flow_enabled": {
+      "type": "boolean"
+    },
+    "volatility_enabled": {
+      "type": "boolean"
+    },
+    "holiday_enabled": {
+      "type": "boolean"
+    },
+    "session_enabled": {
+      "type": "boolean"
+    },
+    "max_spread_points": {
+      "type": "number"
+    },
+    "max_candle_atr_multiple": {
+      "type": "number"
+    },
+    "max_volatility_percentile": {
+      "type": "number"
+    },
+    "min_tick_activity_ratio": {
+      "type": "number"
+    },
+    "max_tick_activity_ratio": {
+      "type": "number"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "MarketProtectionConfig"
+}

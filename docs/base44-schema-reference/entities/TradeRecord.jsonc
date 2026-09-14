@@ -1,0 +1,114 @@
+{
+  "type": "object",
+  "properties": {
+    "bot_id": {
+      "type": "string"
+    },
+    "broker_account_id": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "side": {
+      "type": "string",
+      "enum": [
+        "buy",
+        "sell"
+      ]
+    },
+    "order_type": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number"
+    },
+    "entry_price": {
+      "type": "number"
+    },
+    "exit_price": {
+      "type": "number"
+    },
+    "stop_loss": {
+      "type": "number"
+    },
+    "take_profit": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "open",
+        "filled",
+        "closed",
+        "rejected",
+        "canceled"
+      ]
+    },
+    "realized_pnl": {
+      "type": "number"
+    },
+    "unrealized_pnl": {
+      "type": "number"
+    },
+    "strategy_name": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "opened_at": {
+      "type": "string"
+    },
+    "closed_at": {
+      "type": "string"
+    },
+    "backend_order_id": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "symbol",
+    "side",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "name": "TradeRecord"
+}

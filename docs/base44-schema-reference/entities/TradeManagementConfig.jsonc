@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "fixed_take_profit": {
+      "type": "boolean"
+    },
+    "take_profit_points": {
+      "type": "number"
+    },
+    "automatic_take_profit": {
+      "type": "boolean"
+    },
+    "fixed_stop_loss": {
+      "type": "boolean"
+    },
+    "stop_loss_points": {
+      "type": "number"
+    },
+    "automatic_stop_loss": {
+      "type": "boolean"
+    },
+    "trailing_stop": {
+      "type": "boolean"
+    },
+    "max_positions": {
+      "type": "number"
+    },
+    "direction_mode": {
+      "type": "string"
+    },
+    "lot_size": {
+      "type": "number"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "TradeManagementConfig"
+}

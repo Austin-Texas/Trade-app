@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "session": {
+      "type": "boolean"
+    },
+    "news": {
+      "type": "boolean"
+    },
+    "holiday": {
+      "type": "boolean"
+    },
+    "spread": {
+      "type": "boolean"
+    },
+    "candle": {
+      "type": "boolean"
+    },
+    "tick_flow": {
+      "type": "boolean"
+    },
+    "volatility": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingFilterSettings"
+}

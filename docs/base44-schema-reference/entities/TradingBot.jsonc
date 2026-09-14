@@ -1,0 +1,112 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "strategy_id": {
+      "type": "string"
+    },
+    "strategy_name": {
+      "type": "string"
+    },
+    "broker_account_id": {
+      "type": "string"
+    },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "signals_only",
+        "paper",
+        "demo_auto",
+        "live_auto"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "stopped",
+        "starting",
+        "running",
+        "paused",
+        "error",
+        "risk_blocked"
+      ]
+    },
+    "risk_profile_id": {
+      "type": "string"
+    },
+    "max_open_positions": {
+      "type": "integer"
+    },
+    "max_daily_trades": {
+      "type": "integer"
+    },
+    "risk_per_trade_pct": {
+      "type": "number"
+    },
+    "created_by_plan": {
+      "type": "string"
+    },
+    "last_heartbeat": {
+      "type": "string"
+    },
+    "last_message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "strategy_name",
+    "mode",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "name": "TradingBot"
+}

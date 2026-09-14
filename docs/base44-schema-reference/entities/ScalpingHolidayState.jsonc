@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "holiday_name": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "low_liquidity_expected": {
+      "type": "boolean"
+    },
+    "trading_blocked": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingHolidayState"
+}

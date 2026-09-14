@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "timeframe": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "current_signal": {
+      "type": "string"
+    },
+    "signal_score": {
+      "type": "number"
+    },
+    "open_positions": {
+      "type": "number"
+    },
+    "open_profit": {
+      "type": "number"
+    },
+    "spread_points": {
+      "type": "number"
+    },
+    "session": {
+      "type": "string"
+    },
+    "news_blocked": {
+      "type": "boolean"
+    },
+    "risk_status": {
+      "type": "string"
+    },
+    "last_updated": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingDashboardState"
+}

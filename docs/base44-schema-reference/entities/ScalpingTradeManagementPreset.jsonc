@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "take_profit_mode": {
+      "type": "string"
+    },
+    "stop_loss_mode": {
+      "type": "string"
+    },
+    "trailing_stop_enabled": {
+      "type": "boolean"
+    },
+    "max_positions": {
+      "type": "number"
+    },
+    "profit_guard_enabled": {
+      "type": "boolean"
+    },
+    "drawdown_guard_enabled": {
+      "type": "boolean"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingTradeManagementPreset"
+}

@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "account_login_masked": {
+      "type": "string"
+    },
+    "account_type": {
+      "type": "string"
+    },
+    "leverage": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "number"
+    },
+    "symbol_available": {
+      "type": "boolean"
+    },
+    "hedging_mode": {
+      "type": "boolean"
+    },
+    "compatible": {
+      "type": "boolean"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checked_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingAccountCompatibility"
+}

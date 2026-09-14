@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "event": {
+      "type": "string"
+    },
+    "impact": {
+      "type": "string"
+    },
+    "minutes_to_event": {
+      "type": "number"
+    },
+    "blocked": {
+      "type": "boolean"
+    },
+    "block_until": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingNewsStatus"
+}

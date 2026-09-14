@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "spread_points": {
+      "type": "number"
+    },
+    "tick_rate": {
+      "type": "number"
+    },
+    "volatility_atr": {
+      "type": "number"
+    },
+    "candle_atr_multiple": {
+      "type": "number"
+    },
+    "execution_latency_ms": {
+      "type": "number"
+    },
+    "slippage_points": {
+      "type": "number"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "BrokerExecutionMetrics"
+}

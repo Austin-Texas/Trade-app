@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "ticket": {
+      "type": "number"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "distance_points": {
+      "type": "number"
+    },
+    "activation_profit_points": {
+      "type": "number"
+    },
+    "current_stop": {
+      "type": "number"
+    },
+    "highest_favorable_price": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "TrailingStopState"
+}

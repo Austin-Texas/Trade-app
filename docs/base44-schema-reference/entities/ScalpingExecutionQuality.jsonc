@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "ticket": {
+      "type": "number"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "requested_price": {
+      "type": "number"
+    },
+    "filled_price": {
+      "type": "number"
+    },
+    "slippage_points": {
+      "type": "number"
+    },
+    "spread_points": {
+      "type": "number"
+    },
+    "latency_ms": {
+      "type": "number"
+    },
+    "quality": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingExecutionQuality"
+}

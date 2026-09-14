@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "signal_id": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "decision": {
+      "type": "string"
+    },
+    "score": {
+      "type": "number"
+    },
+    "executed": {
+      "type": "boolean"
+    },
+    "outcome": {
+      "type": "string"
+    },
+    "profit": {
+      "type": "number"
+    },
+    "max_favorable_excursion": {
+      "type": "number"
+    },
+    "max_adverse_excursion": {
+      "type": "number"
+    },
+    "evaluated_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingSignalOutcome"
+}

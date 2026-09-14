@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "all_passed": {
+      "type": "boolean"
+    },
+    "signal_score_ok": {
+      "type": "boolean"
+    },
+    "session_ok": {
+      "type": "boolean"
+    },
+    "news_ok": {
+      "type": "boolean"
+    },
+    "holiday_ok": {
+      "type": "boolean"
+    },
+    "spread_ok": {
+      "type": "boolean"
+    },
+    "candle_ok": {
+      "type": "boolean"
+    },
+    "tick_flow_ok": {
+      "type": "boolean"
+    },
+    "volatility_ok": {
+      "type": "boolean"
+    },
+    "drawdown_ok": {
+      "type": "boolean"
+    },
+    "profit_guard_ok": {
+      "type": "boolean"
+    },
+    "position_limit_ok": {
+      "type": "boolean"
+    },
+    "trade_limit_ok": {
+      "type": "boolean"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ExecutionGuardSnapshot"
+}

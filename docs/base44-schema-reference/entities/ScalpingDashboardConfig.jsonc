@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "show_market_filters": {
+      "type": "boolean"
+    },
+    "show_risk_guards": {
+      "type": "boolean"
+    },
+    "show_execution_metrics": {
+      "type": "boolean"
+    },
+    "show_news_window": {
+      "type": "boolean"
+    },
+    "show_session_status": {
+      "type": "boolean"
+    },
+    "show_trade_management": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingDashboardConfig"
+}

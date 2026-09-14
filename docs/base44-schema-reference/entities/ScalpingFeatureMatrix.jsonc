@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "feature": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "ui_status": {
+      "type": "string"
+    },
+    "backend_status": {
+      "type": "string"
+    },
+    "data_status": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingFeatureMatrix"
+}

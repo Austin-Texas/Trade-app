@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "mt5_connected": {
+      "type": "boolean"
+    },
+    "market_data_fresh": {
+      "type": "boolean"
+    },
+    "news_data_fresh": {
+      "type": "boolean"
+    },
+    "calendar_data_fresh": {
+      "type": "boolean"
+    },
+    "risk_data_fresh": {
+      "type": "boolean"
+    },
+    "scanner_running": {
+      "type": "boolean"
+    },
+    "last_tick": {
+      "type": "string"
+    },
+    "last_news_sync": {
+      "type": "string"
+    },
+    "last_calendar_sync": {
+      "type": "string"
+    },
+    "overall_status": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingSystemHealth"
+}

@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "session": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "trades": {
+      "type": "number"
+    },
+    "wins": {
+      "type": "number"
+    },
+    "losses": {
+      "type": "number"
+    },
+    "win_rate": {
+      "type": "number"
+    },
+    "net_profit": {
+      "type": "number"
+    },
+    "average_spread": {
+      "type": "number"
+    },
+    "average_slippage": {
+      "type": "number"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingPerformanceBySession"
+}

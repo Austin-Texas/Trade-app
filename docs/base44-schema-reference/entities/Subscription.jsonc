@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "properties": {
+    "plan": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "pro",
+        "elite"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "trial",
+        "active",
+        "past_due",
+        "canceled",
+        "suspended"
+      ]
+    },
+    "billing_provider": {
+      "type": "string"
+    },
+    "provider_customer_id": {
+      "type": "string"
+    },
+    "provider_subscription_id": {
+      "type": "string"
+    },
+    "current_period_start": {
+      "type": "string"
+    },
+    "current_period_end": {
+      "type": "string"
+    },
+    "cancel_at_period_end": {
+      "type": "boolean"
+    },
+    "max_bots": {
+      "type": "integer"
+    },
+    "max_broker_accounts": {
+      "type": "integer"
+    },
+    "live_trading_allowed": {
+      "type": "boolean"
+    },
+    "premium_strategies_allowed": {
+      "type": "boolean"
+    },
+    "api_access_allowed": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "plan",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "name": "Subscription"
+}

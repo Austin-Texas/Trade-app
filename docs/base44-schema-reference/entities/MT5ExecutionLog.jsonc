@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "ticket": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "side": {
+      "type": "string"
+    },
+    "volume": {
+      "type": "number"
+    },
+    "price": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "MT5ExecutionLog"
+}

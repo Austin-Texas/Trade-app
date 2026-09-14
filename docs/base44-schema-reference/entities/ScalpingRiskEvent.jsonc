@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "value": {
+      "type": "number"
+    },
+    "limit": {
+      "type": "number"
+    },
+    "message": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingRiskEvent"
+}

@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "news_minutes_before": {
+      "type": "number"
+    },
+    "news_minutes_after": {
+      "type": "number"
+    },
+    "max_spread_points": {
+      "type": "number"
+    },
+    "trailing_distance_points": {
+      "type": "number"
+    },
+    "max_drawdown_percent": {
+      "type": "number"
+    },
+    "session_filter": {
+      "type": "boolean"
+    },
+    "holiday_filter": {
+      "type": "boolean"
+    },
+    "candle_filter": {
+      "type": "boolean"
+    },
+    "tick_flow_filter": {
+      "type": "boolean"
+    },
+    "volatility_filter": {
+      "type": "boolean"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingProtectionPreset"
+}

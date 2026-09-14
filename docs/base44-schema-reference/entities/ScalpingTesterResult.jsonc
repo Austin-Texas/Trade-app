@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "deposit": {
+      "type": "number"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "timeframe": {
+      "type": "string"
+    },
+    "tick_model": {
+      "type": "string"
+    },
+    "trades": {
+      "type": "number"
+    },
+    "win_rate": {
+      "type": "number"
+    },
+    "profit_factor": {
+      "type": "number"
+    },
+    "drawdown": {
+      "type": "number"
+    },
+    "profit": {
+      "type": "number"
+    },
+    "completed_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingTesterResult"
+}

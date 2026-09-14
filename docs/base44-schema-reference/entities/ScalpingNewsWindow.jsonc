@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "impact": {
+      "type": "string"
+    },
+    "minutes_before": {
+      "type": "number"
+    },
+    "minutes_after": {
+      "type": "number"
+    },
+    "blocked_from": {
+      "type": "string"
+    },
+    "blocked_until": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingNewsWindow"
+}

@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "profit_target": {
+      "type": "number"
+    },
+    "max_drawdown_percent": {
+      "type": "number"
+    },
+    "max_trades": {
+      "type": "number"
+    },
+    "max_positions": {
+      "type": "number"
+    },
+    "risk_per_trade_percent": {
+      "type": "number"
+    },
+    "enabled": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingDailyLimits"
+}

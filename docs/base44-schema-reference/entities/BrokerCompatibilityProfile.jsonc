@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "broker": {
+      "type": "string"
+    },
+    "account_type": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "min_spread_points": {
+      "type": "number"
+    },
+    "typical_spread_points": {
+      "type": "number"
+    },
+    "execution_mode": {
+      "type": "string"
+    },
+    "hedging_supported": {
+      "type": "boolean"
+    },
+    "netting_supported": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "BrokerCompatibilityProfile"
+}

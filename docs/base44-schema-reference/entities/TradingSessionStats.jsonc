@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "trades": {
+      "type": "number"
+    },
+    "wins": {
+      "type": "number"
+    },
+    "losses": {
+      "type": "number"
+    },
+    "realized_profit": {
+      "type": "number"
+    },
+    "max_drawdown": {
+      "type": "number"
+    },
+    "profit_target_hit": {
+      "type": "boolean"
+    },
+    "drawdown_limit_hit": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "TradingSessionStats"
+}

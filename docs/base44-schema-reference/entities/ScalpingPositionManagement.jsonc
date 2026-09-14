@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "ticket": {
+      "type": "number"
+    },
+    "tp_mode": {
+      "type": "string"
+    },
+    "sl_mode": {
+      "type": "string"
+    },
+    "trailing_enabled": {
+      "type": "boolean"
+    },
+    "current_sl": {
+      "type": "number"
+    },
+    "current_tp": {
+      "type": "number"
+    },
+    "profit": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingPositionManagement"
+}

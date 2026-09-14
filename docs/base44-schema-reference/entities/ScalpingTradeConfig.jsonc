@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "lot_size": {
+      "type": "number"
+    },
+    "direction": {
+      "type": "string"
+    },
+    "tp": {
+      "type": "object"
+    },
+    "sl": {
+      "type": "object"
+    },
+    "trailing": {
+      "type": "object"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingTradeConfig"
+}

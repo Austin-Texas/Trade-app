@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "score_bucket": {
+      "type": "string"
+    },
+    "signals": {
+      "type": "number"
+    },
+    "wins": {
+      "type": "number"
+    },
+    "observed_win_rate": {
+      "type": "number"
+    },
+    "average_return": {
+      "type": "number"
+    },
+    "calibrated_confidence": {
+      "type": "number"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingModelCalibration"
+}

@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "market": {
+      "type": "boolean"
+    },
+    "news": {
+      "type": "boolean"
+    },
+    "calendar": {
+      "type": "boolean"
+    },
+    "world_risk": {
+      "type": "boolean"
+    },
+    "mt5": {
+      "type": "boolean"
+    },
+    "fresh": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingDataStatus"
+}

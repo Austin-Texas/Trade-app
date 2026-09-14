@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "min_volume": {
+      "type": "number"
+    },
+    "max_volume": {
+      "type": "number"
+    },
+    "volume_step": {
+      "type": "number"
+    },
+    "stops_level_points": {
+      "type": "number"
+    },
+    "freeze_level_points": {
+      "type": "number"
+    },
+    "filling_mode": {
+      "type": "string"
+    },
+    "trade_mode": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingBrokerLimits"
+}

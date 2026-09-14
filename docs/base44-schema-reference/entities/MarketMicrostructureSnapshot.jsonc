@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "bid": {
+      "type": "number"
+    },
+    "ask": {
+      "type": "number"
+    },
+    "spread_points": {
+      "type": "number"
+    },
+    "ticks_per_second": {
+      "type": "number"
+    },
+    "short_term_momentum": {
+      "type": "number"
+    },
+    "atr": {
+      "type": "number"
+    },
+    "current_candle_range": {
+      "type": "number"
+    },
+    "liquidity_state": {
+      "type": "string"
+    },
+    "market_state": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "MarketMicrostructureSnapshot"
+}

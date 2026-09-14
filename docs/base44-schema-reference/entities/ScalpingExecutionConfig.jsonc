@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "demo_only": {
+      "type": "boolean"
+    },
+    "deviation_points": {
+      "type": "number"
+    },
+    "duplicate_cooldown_seconds": {
+      "type": "number"
+    },
+    "require_guard_pass": {
+      "type": "boolean"
+    },
+    "require_fresh_tick": {
+      "type": "boolean"
+    },
+    "max_tick_age_seconds": {
+      "type": "number"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingExecutionConfig"
+}

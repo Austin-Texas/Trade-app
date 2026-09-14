@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "auto_mode": {
+      "type": "string",
+      "enum": [
+        "Both",
+        "Buy Only",
+        "Sell Only",
+        "Signals Only"
+      ]
+    },
+    "scan_interval_seconds": {
+      "type": "integer"
+    },
+    "min_signal_score": {
+      "type": "integer"
+    },
+    "max_open_positions": {
+      "type": "integer"
+    },
+    "max_daily_trades": {
+      "type": "integer"
+    },
+    "risk_per_trade_pct": {
+      "type": "number"
+    },
+    "daily_loss_limit_pct": {
+      "type": "number"
+    },
+    "cooldown_seconds": {
+      "type": "integer"
+    },
+    "symbols": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "MT5BotConfig"
+}
