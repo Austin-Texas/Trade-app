@@ -36,3 +36,6 @@ api_keys*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Local backup files
+*.bak
