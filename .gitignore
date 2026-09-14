@@ -1,0 +1,38 @@
+# Secrets
+.env
+.env.*
+secrets/
+credentials/
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Trading / Broker credentials
+mt5_credentials*
+broker_credentials*
+api_keys*
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
