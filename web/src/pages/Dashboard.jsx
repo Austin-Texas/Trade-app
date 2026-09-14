@@ -14,6 +14,7 @@ import SignalBadge from "@/components/trading/SignalBadge";
 import Sparkline from "@/components/trading/Sparkline";
 import CandlestickChart from "@/components/trading/CandlestickChart";
 import StatCard from "@/components/trading/StatCard";
+import BackendHeartbeatCard from "@/components/trading/BackendHeartbeatCard";
 import SignalAlertsSummary from "@/components/trading/SignalAlertsSummary";
 import RiskCalculator from "@/components/trading/RiskCalculator";
 import GmailSignalReport from "@/components/trading/GmailSignalReport";
@@ -161,12 +162,9 @@ export default function Dashboard() {
           tone="warn"
           icon={Globe2}
         />
-        <StatCard
-          label="Backend"
-          value={backend.online ? "Online" : "Offline"}
-          sub={backend.online ? `${backend.apiVersion} · ${backend.provider}` : "API unreachable"}
-          tone={backend.online ? "bull" : "bear"}
-          icon={Activity}
+        <BackendHeartbeatCard
+          apiVersion={backend.apiVersion}
+          provider={backend.provider}
         />
       </div>
 
