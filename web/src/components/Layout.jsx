@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import {
   LayoutDashboard, LineChart, CandlestickChart, Radar, Crosshair, Newspaper,
   Globe2, CalendarDays, History, BarChart3, Cpu, Activity, Settings,
-  Search, Menu, X, TrendingUp, Bot, Coins, WalletCards, CreditCard,
+  Search, Menu, X, Bot, Coins, WalletCards, CreditCard,
 } from "lucide-react";
 import SignalNotificationBell from "@/components/SignalNotificationBell";
 import WatchlistWidget from "@/components/trading/WatchlistWidget";
@@ -62,9 +62,11 @@ export default function Layout() {
         }`}
       >
         <div className="h-14 flex items-center gap-2 px-4 border-b border-border">
-          <div className="w-8 h-8 rounded-md bg-primary/20 flex items-center justify-center">
-            <TrendingUp className="w-5 h-5 text-primary" />
-          </div>
+          <img
+            src="/trading-logo.svg"
+            alt="Global AI Trading Center"
+            className="w-9 h-9 rounded-md shrink-0"
+          />
           <div className="leading-tight">
             <div className="text-sm font-semibold tracking-tight">Global AI Trading</div>
             <div className="text-[10px] text-muted-foreground uppercase tracking-widest">Center</div>
