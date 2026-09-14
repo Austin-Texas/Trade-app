@@ -1,128 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Global AI Trading Center</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1020;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
-
-    .card {
-      background: #151c31;
-      padding: 40px;
-      border-radius: 16px;
-      text-align: center;
-      width: 90%;
-      max-width: 650px;
-    }
-
-    h1 {
-      margin-bottom: 10px;
-    }
-
-    .status {
-      margin-top: 20px;
-      font-weight: bold;
-    }
-
-    .good {
-      color: #4ade80;
-    }
-
-    .bad {
-      color: #f87171;
-    }
-
-    .info {
-      margin-top: 25px;
-      font-size: 14px;
-      color: #cbd5e1;
-    }
-
-    code {
-      color: #93c5fd;
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="card">
-
-    <h1>Global AI Trading Center</h1>
-
-    <p>Trading platform frontend is online.</p>
-
-    <div id="web-status" class="status good">
-      ● trade-web healthy
-    </div>
-
-    <div id="api-status" class="status">
-      ● Checking trade-api...
-    </div>
-
-    <div class="info">
-      Frontend:
-      <br>
-      <code>https://trade-web.hastenload.com</code>
-
-      <br><br>
-
-      API:
-      <br>
-      <code>https://trade-api.hastenload.com</code>
-    </div>
-
-  </div>
-
-<script>
-
-const API_URL = "https://trade-api.hastenload.com";
-
-async function checkAPI() {
-
-    const status = document.getElementById("api-status");
-
-    try {
-
-        const response = await fetch(`${API_URL}/health`);
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.status === "healthy") {
-            status.className = "status good";
-            status.textContent = "● trade-api healthy";
-        } else {
-            throw new Error("API unhealthy");
-        }
-
-    } catch (error) {
-
-        status.className = "status bad";
-        status.textContent = "● trade-api connection failed";
-
-        console.error(error);
-    }
-}
-
-checkAPI();
-
-</script>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>Global AI Trading Center</title>
+    <meta name="description" content="AI-powered global market analysis and trading-signal platform. Advisory only — no automated live trading." />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
