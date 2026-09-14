@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "ticket": {
+      "type": "number"
+    },
+    "take_profit_mode": {
+      "type": "string"
+    },
+    "stop_loss_mode": {
+      "type": "string"
+    },
+    "trailing_mode": {
+      "type": "string"
+    },
+    "initial_stop": {
+      "type": "number"
+    },
+    "current_stop": {
+      "type": "number"
+    },
+    "take_profit": {
+      "type": "number"
+    },
+    "unrealized_profit": {
+      "type": "number"
+    },
+    "management_status": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "PositionManagementState"
+}

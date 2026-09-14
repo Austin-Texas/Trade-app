@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "compatible_symbol": {
+      "type": "boolean"
+    },
+    "compatible_timeframe": {
+      "type": "boolean"
+    },
+    "all_data_ready": {
+      "type": "boolean"
+    },
+    "all_guards_ready": {
+      "type": "boolean"
+    },
+    "execution_ready": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingModeStatus"
+}

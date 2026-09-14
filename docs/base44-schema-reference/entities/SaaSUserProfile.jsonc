@@ -1,0 +1,85 @@
+{
+  "type": "object",
+  "properties": {
+    "display_name": {
+      "type": "string"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "onboarding_status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "in_progress",
+        "complete"
+      ]
+    },
+    "subscription_plan": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "pro",
+        "elite"
+      ]
+    },
+    "trading_enabled": {
+      "type": "boolean"
+    },
+    "terms_accepted_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "subscription_plan",
+    "trading_enabled"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  },
+  "name": "SaaSUserProfile"
+}

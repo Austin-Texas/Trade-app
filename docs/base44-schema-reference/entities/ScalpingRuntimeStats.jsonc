@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "scans": {
+      "type": "number"
+    },
+    "signals": {
+      "type": "number"
+    },
+    "orders": {
+      "type": "number"
+    },
+    "blocked_by_news": {
+      "type": "number"
+    },
+    "blocked_by_spread": {
+      "type": "number"
+    },
+    "blocked_by_volatility": {
+      "type": "number"
+    },
+    "blocked_by_tick_flow": {
+      "type": "number"
+    },
+    "blocked_by_candle": {
+      "type": "number"
+    },
+    "blocked_by_risk": {
+      "type": "number"
+    },
+    "started_at": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingRuntimeStats"
+}

@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "active_count": {
+      "type": "number"
+    },
+    "passed_count": {
+      "type": "number"
+    },
+    "blocked_count": {
+      "type": "number"
+    },
+    "overall_permission": {
+      "type": "string"
+    },
+    "block_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingProtectionSummary"
+}

@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 18% 6%;
+    --foreground: 210 20% 94%;
+    --card: 222 15% 9%;
+    --card-foreground: 210 20% 94%;
+    --popover: 222 16% 8%;
+    --popover-foreground: 210 20% 94%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 222 40% 8%;
+    --secondary: 222 14% 14%;
+    --secondary-foreground: 210 20% 92%;
+    --muted: 222 14% 14%;
+    --muted-foreground: 215 16% 58%;
+    --accent: 199 60% 18%;
+    --accent-foreground: 199 90% 70%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 222 12% 17%;
+    --input: 222 12% 17%;
+    --ring: 199 89% 48%;
+    --bull: 142 64% 45%;
+    --bull-foreground: 142 80% 92%;
+    --bear: 0 72% 52%;
+    --bear-foreground: 0 85% 95%;
+    --warn: 38 92% 50%;
+    --warn-foreground: 38 95% 95%;
+    --neutral: 215 16% 55%;
+    --chart-1: 142 64% 45%;
+    --chart-2: 0 72% 52%;
+    --chart-3: 199 89% 48%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 276 70% 60%;
+    --radius: 0.5rem;
+    --font-heading: ui-sans-serif, system-ui, sans-serif;
+    --font-body: ui-sans-serif, system-ui, sans-serif;
+    --font-display: ui-sans-serif, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Custom scrollbar - thin institutional style */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: hsl(222 12% 22%);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(222 14% 30%);
+  }
+}
+
+@layer utilities {
+  .text-bull { color: hsl(var(--bull)); }
+  .text-bear { color: hsl(var(--bear)); }
+  .text-warn { color: hsl(var(--warn)); }
+  .bg-bull { background-color: hsl(var(--bull)); }
+  .bg-bear { background-color: hsl(var(--bear)); }
+  .bg-warn { background-color: hsl(var(--warn)); }
+  .tabular-nums { font-variant-numeric: tabular-nums; }
+  .scrollbar-thin { scrollbar-width: thin; }
+}

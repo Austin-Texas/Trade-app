@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "event_name": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "impact": {
+      "type": "string"
+    },
+    "event_time": {
+      "type": "string"
+    },
+    "block_start": {
+      "type": "string"
+    },
+    "block_end": {
+      "type": "string"
+    },
+    "affected_symbols": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "active": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "EconomicEventBlock"
+}

@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "spread_cost": {
+      "type": "number"
+    },
+    "commission_cost": {
+      "type": "number"
+    },
+    "estimated_slippage_cost": {
+      "type": "number"
+    },
+    "total_estimated_cost": {
+      "type": "number"
+    },
+    "trade_allowed": {
+      "type": "boolean"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "TradingCostSnapshot"
+}

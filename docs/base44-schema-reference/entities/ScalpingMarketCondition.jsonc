@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "session": {
+      "type": "string"
+    },
+    "spread_state": {
+      "type": "string"
+    },
+    "volatility_state": {
+      "type": "string"
+    },
+    "tick_flow_state": {
+      "type": "string"
+    },
+    "candle_state": {
+      "type": "string"
+    },
+    "news_state": {
+      "type": "string"
+    },
+    "holiday_state": {
+      "type": "string"
+    },
+    "overall_state": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingMarketCondition"
+}

@@ -1,0 +1,62 @@
+{
+  "type": "object",
+  "properties": {
+    "strategy_name": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "timeframe": {
+      "type": "string"
+    },
+    "feature_summary": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "implemented_features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "not_implemented_features": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "StrategyComparison"
+}

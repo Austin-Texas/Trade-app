@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "mt5_connected": {
+      "type": "boolean"
+    },
+    "demo_account": {
+      "type": "boolean"
+    },
+    "symbol_ready": {
+      "type": "boolean"
+    },
+    "market_data_ready": {
+      "type": "boolean"
+    },
+    "filters_ready": {
+      "type": "boolean"
+    },
+    "risk_ready": {
+      "type": "boolean"
+    },
+    "signal_ready": {
+      "type": "boolean"
+    },
+    "ready": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingExecutionReadiness"
+}

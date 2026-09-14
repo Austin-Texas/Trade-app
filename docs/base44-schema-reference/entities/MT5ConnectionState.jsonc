@@ -1,0 +1,75 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "disconnected",
+        "connecting",
+        "connected",
+        "error"
+      ]
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "demo",
+        "live",
+        "unknown"
+      ]
+    },
+    "account_masked": {
+      "type": "string"
+    },
+    "currency": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "number"
+    },
+    "equity": {
+      "type": "number"
+    },
+    "margin": {
+      "type": "number"
+    },
+    "free_margin": {
+      "type": "number"
+    },
+    "open_positions": {
+      "type": "integer"
+    },
+    "last_sync": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "name": "MT5ConnectionState"
+}

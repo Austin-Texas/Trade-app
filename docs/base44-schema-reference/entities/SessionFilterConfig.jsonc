@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "asia_enabled": {
+      "type": "boolean"
+    },
+    "london_enabled": {
+      "type": "boolean"
+    },
+    "new_york_enabled": {
+      "type": "boolean"
+    },
+    "overlap_enabled": {
+      "type": "boolean"
+    },
+    "custom_hours_enabled": {
+      "type": "boolean"
+    },
+    "timezone": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "SessionFilterConfig"
+}

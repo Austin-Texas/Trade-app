@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "trades": {
+      "type": "number"
+    },
+    "wins": {
+      "type": "number"
+    },
+    "losses": {
+      "type": "number"
+    },
+    "gross_profit": {
+      "type": "number"
+    },
+    "gross_loss": {
+      "type": "number"
+    },
+    "net_profit": {
+      "type": "number"
+    },
+    "max_drawdown": {
+      "type": "number"
+    },
+    "average_spread": {
+      "type": "number"
+    },
+    "blocked_entries": {
+      "type": "number"
+    },
+    "top_block_reason": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingDailyReport"
+}

@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "deposit": {
+      "type": "number"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "timeframe": {
+      "type": "string"
+    },
+    "tick_mode": {
+      "type": "string"
+    },
+    "lot_size": {
+      "type": "number"
+    },
+    "result": {
+      "type": "object"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingBacktest"
+}

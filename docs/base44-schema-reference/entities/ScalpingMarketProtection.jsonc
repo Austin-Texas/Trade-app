@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "spread": {
+      "type": "boolean"
+    },
+    "candle_size": {
+      "type": "boolean"
+    },
+    "tick_flow": {
+      "type": "boolean"
+    },
+    "volatility": {
+      "type": "boolean"
+    },
+    "news": {
+      "type": "boolean"
+    },
+    "holiday": {
+      "type": "boolean"
+    },
+    "session": {
+      "type": "boolean"
+    },
+    "all_passed": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingMarketProtection"
+}

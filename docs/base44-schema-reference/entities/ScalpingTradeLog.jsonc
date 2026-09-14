@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "ticket": {
+      "type": "number"
+    },
+    "symbol": {
+      "type": "string"
+    },
+    "side": {
+      "type": "string"
+    },
+    "entry_price": {
+      "type": "number"
+    },
+    "exit_price": {
+      "type": "number"
+    },
+    "volume": {
+      "type": "number"
+    },
+    "profit": {
+      "type": "number"
+    },
+    "signal_score": {
+      "type": "number"
+    },
+    "session": {
+      "type": "string"
+    },
+    "spread_at_entry": {
+      "type": "number"
+    },
+    "entry_reason": {
+      "type": "string"
+    },
+    "exit_reason": {
+      "type": "string"
+    },
+    "opened_at": {
+      "type": "string"
+    },
+    "closed_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingTradeLog"
+}

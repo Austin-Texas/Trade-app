@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "ticks_per_second": {
+      "type": "number"
+    },
+    "baseline_ticks_per_second": {
+      "type": "number"
+    },
+    "activity_ratio": {
+      "type": "number"
+    },
+    "state": {
+      "type": "string"
+    },
+    "entry_allowed": {
+      "type": "boolean"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "TickFlowState"
+}

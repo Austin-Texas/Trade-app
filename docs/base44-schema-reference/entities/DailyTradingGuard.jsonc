@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string"
+    },
+    "profit_limit": {
+      "type": "number"
+    },
+    "drawdown_limit_percent": {
+      "type": "number"
+    },
+    "trade_limit": {
+      "type": "number"
+    },
+    "profit_reached": {
+      "type": "boolean"
+    },
+    "drawdown_reached": {
+      "type": "boolean"
+    },
+    "trade_limit_reached": {
+      "type": "boolean"
+    },
+    "trading_blocked": {
+      "type": "boolean"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "DailyTradingGuard"
+}

@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "mt5_bridge": {
+      "type": "boolean"
+    },
+    "xauusd_ticks": {
+      "type": "boolean"
+    },
+    "m1_candles": {
+      "type": "boolean"
+    },
+    "economic_calendar": {
+      "type": "boolean"
+    },
+    "news_feed": {
+      "type": "boolean"
+    },
+    "world_risk_feed": {
+      "type": "boolean"
+    },
+    "spread_metrics": {
+      "type": "boolean"
+    },
+    "tick_flow_metrics": {
+      "type": "boolean"
+    },
+    "ready": {
+      "type": "boolean"
+    },
+    "missing": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "checked_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingLiveReadiness"
+}

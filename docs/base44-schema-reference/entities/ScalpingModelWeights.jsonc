@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "technical": {
+      "type": "number"
+    },
+    "momentum": {
+      "type": "number"
+    },
+    "volume": {
+      "type": "number"
+    },
+    "structure": {
+      "type": "number"
+    },
+    "multi_timeframe": {
+      "type": "number"
+    },
+    "news": {
+      "type": "number"
+    },
+    "macro": {
+      "type": "number"
+    },
+    "geopolitical": {
+      "type": "number"
+    },
+    "microstructure": {
+      "type": "number"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingModelWeights"
+}

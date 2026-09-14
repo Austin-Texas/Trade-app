@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "next_high_impact_event": {
+      "type": "string"
+    },
+    "event_time": {
+      "type": "string"
+    },
+    "minutes_until_event": {
+      "type": "number"
+    },
+    "blocked": {
+      "type": "boolean"
+    },
+    "block_until": {
+      "type": "string"
+    },
+    "affected_currency": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingCalendarState"
+}

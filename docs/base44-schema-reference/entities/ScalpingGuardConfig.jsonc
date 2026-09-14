@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "guard": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "threshold": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingGuardConfig"
+}

@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "timeframe": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "initial_deposit": {
+      "type": "number"
+    },
+    "start_date": {
+      "type": "string"
+    },
+    "end_date": {
+      "type": "string"
+    },
+    "total_trades": {
+      "type": "number"
+    },
+    "win_rate": {
+      "type": "number"
+    },
+    "profit_factor": {
+      "type": "number"
+    },
+    "max_drawdown": {
+      "type": "number"
+    },
+    "net_profit": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingBacktestRun"
+}

@@ -1,0 +1,56 @@
+{
+  "type": "object",
+  "properties": {
+    "balance": {
+      "type": "number"
+    },
+    "equity": {
+      "type": "number"
+    },
+    "free_margin": {
+      "type": "number"
+    },
+    "open_profit": {
+      "type": "number"
+    },
+    "positions": {
+      "type": "number"
+    },
+    "trades_today": {
+      "type": "number"
+    },
+    "daily_profit": {
+      "type": "number"
+    },
+    "drawdown_percent": {
+      "type": "number"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingAccountState"
+}

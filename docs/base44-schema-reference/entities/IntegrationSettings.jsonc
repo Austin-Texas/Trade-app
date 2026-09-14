@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "backend_api_url": {
+      "type": "string"
+    },
+    "backend_ws_url": {
+      "type": "string"
+    },
+    "mt5_server": {
+      "type": "string"
+    },
+    "mt5_login": {
+      "type": "string"
+    },
+    "mt5_password": {
+      "type": "string"
+    },
+    "mt5_investor_password": {
+      "type": "string"
+    },
+    "mt5_enabled": {
+      "type": "boolean"
+    },
+    "mt5_access_mode": {
+      "type": "string",
+      "enum": [
+        "read_only"
+      ]
+    }
+  },
+  "required": [
+    "backend_api_url",
+    "mt5_enabled",
+    "mt5_access_mode"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "name": "IntegrationSettings"
+}

@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string"
+    },
+    "timeframe": {
+      "type": "string"
+    },
+    "lot_size": {
+      "type": "number"
+    },
+    "direction_mode": {
+      "type": "string"
+    },
+    "max_positions": {
+      "type": "number"
+    },
+    "minimum_signal_score": {
+      "type": "number"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "protection_preset": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingEngineConfig"
+}

@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "open_profit": {
+      "type": "number"
+    },
+    "realized_profit": {
+      "type": "number"
+    },
+    "target": {
+      "type": "number"
+    },
+    "reached": {
+      "type": "boolean"
+    },
+    "entries_blocked": {
+      "type": "boolean"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  },
+  "required": [],
+  "name": "ScalpingProfitGuardStatus"
+}
