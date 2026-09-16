@@ -23,8 +23,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: npm
-          cache-dependency-path: web/package-lock.json
       - name: Reject Base44 runtime dependencies
         run: |
           if grep -RniE '@base44|VITE_BASE44_APP_ID|base44Client' src package.json vite.config.* 2>/dev/null; then
@@ -32,6 +30,6 @@ jobs:
             exit 1
           fi
       - name: Install dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
       - name: Build frontend
         run: npm run build
