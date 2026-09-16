@@ -27,6 +27,7 @@ jobs:
       - name: Reject Base44 runtime dependencies
         run: |
           if grep -RniE 'base44|@base44|VITE_BASE44|base44Client' . \
+            --exclude='*.md' \
             --exclude='package-lock.json' \
             --exclude-dir='node_modules' \
             --exclude-dir='dist'; then
