@@ -1,6 +1,7 @@
 # Secrets
 .env
 .env.*
+.env.cloudflare
 secrets/
 credentials/
 *.pem
