@@ -1,0 +1,1 @@
+Standalone migration uses the self-hosted Trade API. Hosted SDK dependencies have been removed from the frontend package manifest. Do not enable live execution until server-side auth, persistence, risk and broker controls are verified.
