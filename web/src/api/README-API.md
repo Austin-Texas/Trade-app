@@ -1,0 +1,1 @@
+Use `tradeApiClient.js` for browser-to-backend requests. Known backend groups remain under `/api/v1/*`; unsupported UI operations require corresponding FastAPI routes before they can be considered functional.
