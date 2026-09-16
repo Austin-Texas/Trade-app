@@ -1,0 +1,77 @@
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+
+    steps:
+      - name: Show runner
+        run: |
+          whoami
+          hostname
+          pwd
+
+      - name: Deploy latest main
+        run: |
+          set -e
+
+          cd /home/trad/Trade-app
+
+          echo "=== CURRENT COMMIT ==="
+          git rev-parse --short HEAD
+
+          echo "=== FETCH MAIN ==="
+          git fetch origin main
+
+          echo "=== SYNC MAIN ==="
+          git checkout main
+          git reset --hard origin/main
+
+          echo "=== BUILD FRONTEND ==="
+          docker compose build trade-web
+
+          echo "=== RESTART FRONTEND ==="
+          docker compose up -d --force-recreate trade-web
+
+          echo "=== CONTAINERS ==="
+          docker compose ps
+
+      - name: Verify local frontend
+        run: |
+          set -e
+          sleep 5
+          curl --fail --retry 5 --retry-delay 3 \
+            http://localhost:8080/ >/dev/null
+
+      - name: Verify API
+        run: |
+          set -e
+          curl --fail --retry 5 --retry-delay 3 \
+            http://localhost:8100/api/v1/health
+
+      - name: Verify public frontend
+        run: |
+          set -e
+          curl --fail --retry 5 --retry-delay 5 \
+            https://trade-web.hastenload.com/ >/dev/null
+
+      - name: Final status
+        run: |
+          cd /home/trad/Trade-app
+          echo "=== DEPLOYED COMMIT ==="
+          git log -1 --oneline
+          echo "=== DOCKER STATUS ==="
+          docker compose ps
