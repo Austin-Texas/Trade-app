@@ -1,0 +1,23 @@
+services:
+
+  cloudflared-api:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-api
+    restart: unless-stopped
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+      - --token
+      - ${CF_API_TOKEN}
+
+  cloudflared-web:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-web
+    restart: unless-stopped
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+      - --token
+      - ${CF_WEB_TOKEN}
