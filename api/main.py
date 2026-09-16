@@ -42,8 +42,16 @@ def root():
 
 @app.get("/health")
 def health():
+    return {"status": "healthy"}
+
+
+@app.get("/api/v1/health")
+def api_v1_health():
     return {
-        "status": "healthy"
+        "status": "healthy",
+        "service": "trade-api",
+        "api_version": "v1",
+        "trading_enabled": False,
     }
 
 

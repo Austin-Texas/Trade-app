@@ -7,7 +7,8 @@ on:
       - '.github/workflows/frontend-verify.yml'
   push:
     branches:
-      - base44-latest-ui-migration
+      - latest-ui-full-sync
+      - main
     paths:
       - 'web/**'
       - '.github/workflows/frontend-verify.yml'
@@ -23,13 +24,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
+          cache-dependency-path: web/package-lock.json
       - name: Reject Base44 runtime dependencies
         run: |
-          if grep -RniE '@base44|VITE_BASE44_APP_ID|base44Client' src package.json vite.config.* 2>/dev/null; then
-            echo 'Base44 runtime reference detected.'
+          if grep -RniE 'base44|@base44|VITE_BASE44|base44Client' . \
+            --exclude='package-lock.json' \
+            --exclude-dir='node_modules' \
+            --exclude-dir='dist'; then
+            echo 'Base44 reference detected in frontend source/configuration.'
             exit 1
           fi
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
       - name: Build frontend
         run: npm run build
