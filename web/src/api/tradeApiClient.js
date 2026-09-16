@@ -1,5 +1,8 @@
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "https://trade-api.hastenload.com").replace(/\/$/, "");
 const TOKEN_KEY = "tradeapp:access_token";
+export const AUTH_MODE = (import.meta.env.VITE_AUTH_MODE || "optional").toLowerCase();
+export const AUTH_REQUIRED = AUTH_MODE === "required";
+const STANDALONE_USER = { id: "standalone", email: "", role: "viewer", name: "Standalone User", auth_mode: "optional" };
 
 function getToken() { return localStorage.getItem(TOKEN_KEY); }
 function setToken(token) { token ? localStorage.setItem(TOKEN_KEY, token) : localStorage.removeItem(TOKEN_KEY); }
@@ -34,10 +37,11 @@ export const tradeApi = {
   auth: {
     setToken,
     isAuthenticated: async () => {
+      if (!AUTH_REQUIRED && !getToken()) return true;
       if (!getToken()) return false;
       try { await request("/api/v1/auth/me"); return true; } catch { return false; }
     },
-    me: () => request("/api/v1/auth/me"),
+    me: () => (!AUTH_REQUIRED && !getToken()) ? Promise.resolve(STANDALONE_USER) : request("/api/v1/auth/me"),
     loginViaEmailPassword: async (email, password) => {
       const result = await request("/api/v1/auth/login", { method: "POST", body: JSON.stringify({ email, password }) });
       if (result?.access_token) setToken(result.access_token);
@@ -50,7 +54,7 @@ export const tradeApi = {
     resetPassword: (data) => request("/api/v1/auth/password/reset", { method: "POST", body: JSON.stringify(data) }),
     changePassword: (data) => request("/api/v1/auth/password/change", { method: "POST", body: JSON.stringify(data) }),
     updateMe: (data) => request("/api/v1/auth/me", { method: "PATCH", body: JSON.stringify(data) }),
-    loginWithProvider: (provider, returnTo = "/") => window.location.assign(`${API_BASE_URL}/api/v1/auth/oauth/${encodeURIComponent(provider)}?return_to=${encodeURIComponent(returnTo)}`),
+    loginWithProvider: (provider, returnTo = "/") => { window.location.assign(`${API_BASE_URL}/api/v1/auth/oauth/${encodeURIComponent(provider)}?return_to=${encodeURIComponent(returnTo)}`); },
     logout: async (returnTo = "/login") => { try { await request("/api/v1/auth/logout", { method: "POST" }); } catch {} setToken(null); window.location.assign(returnTo); },
   },
   entities: new Proxy({}, { get: (_, name) => entity(String(name)) }),
