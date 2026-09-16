@@ -1,9 +1,11 @@
 name: Deploy Production
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - Frontend Verify
+    types:
+      - completed
   workflow_dispatch:
 
 concurrency:
@@ -12,11 +14,18 @@ concurrency:
 
 jobs:
   deploy:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main'
+      )
+
     runs-on:
       - self-hosted
       - Linux
       - X64
-
+    
     steps:
       - name: Show runner
         run: |
